@@ -1,0 +1,20 @@
+# permissions for end users to view pools.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: pool-viewer-role
+rules:
+- apiGroups:
+  - fortiadc.ouest-france.fr
+  resources:
+  - pools
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - fortiadc.ouest-france.fr
+  resources:
+  - pools/status
+  verbs:
+  - get

@@ -1,0 +1,7 @@
+apiVersion: fortiadc.ouest-france.fr/v1
+kind: VirtualServer
+metadata:
+  name: virtualserver-sample
+spec:
+  # Add fields here
+  foo: bar

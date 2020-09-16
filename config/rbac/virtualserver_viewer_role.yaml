@@ -1,0 +1,20 @@
+# permissions for end users to view virtualservers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: virtualserver-viewer-role
+rules:
+- apiGroups:
+  - fortiadc.ouest-france.fr
+  resources:
+  - virtualservers
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - fortiadc.ouest-france.fr
+  resources:
+  - virtualservers/status
+  verbs:
+  - get

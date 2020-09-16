@@ -1,0 +1,7 @@
+apiVersion: fortiadc.ouest-france.fr/v1
+kind: RealServer
+metadata:
+  name: realserver-sample
+spec:
+  # Add fields here
+  foo: bar

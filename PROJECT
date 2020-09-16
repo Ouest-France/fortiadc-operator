@@ -1,0 +1,13 @@
+domain: ouest-france.fr
+repo: github.com/Ouest-France/fortiadc-operator
+resources:
+- group: fortiadc
+  kind: RealServer
+  version: v1
+- group: fortiadc
+  kind: Pool
+  version: v1
+- group: fortiadc
+  kind: VirtualServer
+  version: v1
+version: "2"

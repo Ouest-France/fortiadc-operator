@@ -1,0 +1,24 @@
+# permissions for end users to edit realservers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: realserver-editor-role
+rules:
+- apiGroups:
+  - fortiadc.ouest-france.fr
+  resources:
+  - realservers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - fortiadc.ouest-france.fr
+  resources:
+  - realservers/status
+  verbs:
+  - get
