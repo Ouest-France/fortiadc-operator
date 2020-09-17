@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/cookiejar"
 	"os"
+	"strconv"
 
 	"github.com/Ouest-France/gofortiadc"
 )
@@ -20,10 +21,12 @@ func NewFortiClient() (gofortiadc.Client, error) {
 		return gofortiadc.Client{}, errors.New("Env vars FORTIADC_ADDRESS, FORTIADC_USERNAME and FORTIADC_PASSWORD must be set")
 	}
 
+	insecure, _ := strconv.ParseBool(os.Getenv("FORTIADC_INSECURE"))
+
 	// Construct an http client with cookies
 	cookieJar, _ := cookiejar.New(nil)
 	tr := &http.Transport{
-		TLSClientConfig: &tls.Config{},
+		TLSClientConfig: &tls.Config{InsecureSkipVerify: insecure},
 	}
 	httpClient := &http.Client{
 		Jar:       cookieJar,
