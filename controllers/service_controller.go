@@ -59,12 +59,16 @@ func (r *ServiceReconciler) Reconcile(req ctrl.Request) (ctrl.Result, error) {
 	finalizerName := "service.kubernetes.io/load-balancer-cleanup"
 	if service.ObjectMeta.DeletionTimestamp.IsZero() {
 
-		log.Info("Set finalizer")
+		// Set finalizer only if service is type LoadBalancer and have fortiadc annotation
+		_, ok := service.Annotations["fortiadc.ouest-france.fr/virtualserver-name"]
+		if service.Spec.Type == "LoadBalancer" && ok {
+			log.Info("Set finalizer")
 
-		if !containsString(service.ObjectMeta.Finalizers, finalizerName) {
-			service.ObjectMeta.Finalizers = append(service.ObjectMeta.Finalizers, finalizerName)
-			if err := r.Update(context.Background(), &service); err != nil {
-				return ctrl.Result{}, fmt.Errorf("failed to add finalizer: %w", err)
+			if !containsString(service.ObjectMeta.Finalizers, finalizerName) {
+				service.ObjectMeta.Finalizers = append(service.ObjectMeta.Finalizers, finalizerName)
+				if err := r.Update(context.Background(), &service); err != nil {
+					return ctrl.Result{}, fmt.Errorf("failed to add finalizer: %w", err)
+				}
 			}
 		}
 	} else {
