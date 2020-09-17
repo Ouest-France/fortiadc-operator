@@ -123,9 +123,9 @@ func (r *ServiceReconciler) DeleteVirtualServer(ctx context.Context, namespacedN
 func (r *ServiceReconciler) CreateOrUpdateVirtualServer(ctx context.Context, service corev1.Service) error {
 
 	// Check for virtualserver-name annotation
-	virtualServerName, ok := service.Annotations["fortiadc.servicecontroller.io/virtualserver-name"]
+	virtualServerName, ok := service.Annotations["fortiadc.ouest-france.fr/virtualserver-name"]
 	if !ok {
-		log.Log.Info("no annotation fortiadc.servicecontroller.io/virtualserver-name found")
+		log.Log.Info("no annotation fortiadc.ouest-france.fr/virtualserver-name found")
 		return nil
 	}
 
