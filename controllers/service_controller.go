@@ -186,7 +186,7 @@ func (r *ServiceReconciler) CreateVirtualServer(ctx context.Context, name string
 
 	// Set status
 	service.Status.LoadBalancer.Ingress = []corev1.LoadBalancerIngress{corev1.LoadBalancerIngress{IP: service.Spec.LoadBalancerIP}}
-	err = r.Update(ctx, &service)
+	err = r.Status().Update(ctx, &service)
 	if err != nil {
 		return fmt.Errorf("failed to update kube service status: %w", err)
 	}
@@ -215,7 +215,7 @@ func (r *ServiceReconciler) UpdateVirtualServer(ctx context.Context, vs api.Virt
 
 	// Set status
 	service.Status.LoadBalancer.Ingress = []corev1.LoadBalancerIngress{corev1.LoadBalancerIngress{IP: service.Spec.LoadBalancerIP}}
-	err = r.Update(ctx, &service)
+	err = r.Status().Update(ctx, &service)
 	if err != nil {
 		return fmt.Errorf("failed to update kube service status: %w", err)
 	}
