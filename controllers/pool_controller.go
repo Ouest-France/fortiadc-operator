@@ -25,9 +25,13 @@ import (
 	"github.com/go-logr/logr"
 	corev1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
+	"sigs.k8s.io/controller-runtime/pkg/source"
 
 	api "github.com/Ouest-France/fortiadc-operator/api/v1"
 	fortiadcv1 "github.com/Ouest-France/fortiadc-operator/api/v1"
@@ -321,7 +325,30 @@ func (r *PoolReconciler) DeleteRealServerPoolMember(ctx context.Context, fortiCl
 }
 
 func (r *PoolReconciler) SetupWithManager(mgr ctrl.Manager) error {
+
+	// Create a reconcile request for each pool on nodes events
+	nodeHandler := handler.ToRequestsFunc(
+		func(a handler.MapObject) []reconcile.Request {
+
+			var requests []reconcile.Request
+
+			// Fetch pools
+			var pools api.PoolList
+			err := r.List(context.Background(), &pools)
+			if err != nil {
+				return requests
+			}
+
+			// Add request for each pool
+			for _, pool := range pools.Items {
+				requests = append(requests, reconcile.Request{NamespacedName: types.NamespacedName{Name: pool.Name, Namespace: pool.Namespace}})
+			}
+
+			return requests
+		})
+
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&fortiadcv1.Pool{}).
+		Watches(&source.Kind{Type: &corev1.Node{}}, &handler.EnqueueRequestsFromMapFunc{ToRequests: nodeHandler}).
 		Complete(r)
 }
