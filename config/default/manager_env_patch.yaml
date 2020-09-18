@@ -1,0 +1,33 @@
+# This patch inject needed vars to access fortiadc
+# /!\ WARNING : The name of secrets can change if the namePrefix is changed.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-manager
+  namespace: system
+spec:
+  template:
+    spec:
+      containers:
+      - name: manager
+        env:
+        - name: FORTIADC_ADDRESS
+          valueFrom:
+            secretKeyRef:
+              name: fortiadc-operator-secret
+              key: address
+        - name: FORTIADC_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: fortiadc-operator-secret
+              key: username
+        - name: FORTIADC_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: fortiadc-operator-secret
+              key: password
+        - name: FORTIADC_INSECURE
+          valueFrom:
+            secretKeyRef:
+              name: fortiadc-operator-secret
+              key: insecure
