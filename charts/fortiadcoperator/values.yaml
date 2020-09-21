@@ -1,0 +1,40 @@
+affinity: {}
+
+fullnameOverride: ""
+
+fortiadc:
+  secret:
+    address: ""
+    insecure: false
+    username: ""
+    password: ""
+
+image:
+  repository: ouestfrance/fortiadc-operator
+  tag: 0.1.4
+  pullPolicy: Always
+
+nameOverride: ""
+
+nodeSelector: {}
+
+replicaCount: 2
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 30Mi
+  requests:
+    cpu: 100m
+    memory: 20Mi
+
+serviceAccount: fortiadc-operator
+
+serviceMonitor:
+  enabled: false
+
+service:
+  type: ClusterIP
+  port: 443
+
+tolerations: []
