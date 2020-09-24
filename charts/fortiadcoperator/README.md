@@ -4,8 +4,8 @@ Fortiadc-operator is an operator which allow to create external resource in a fo
 
 ## Prerequisites
 
-- Kubernetes 1.9+
-- Helm 2.13+
+- Kubernetes 1.15+
+- Helm 3.1+
 
 ## Installing the Chart
 
@@ -18,7 +18,7 @@ $ helm repo add ouestfrance https://charts.ouest-france.fr/
 To install the chart with the release name `my-release`:
 
 ```console
-$ helm install --name my-release ouestfrance/fortiadc-operator
+$ helm upgrade -i my-release ouestfrance/fortiadcoperator
 ```
 
 The command deploys the operator on the Kubernetes cluster in the default configuration. You need to provide the credentials to access to your

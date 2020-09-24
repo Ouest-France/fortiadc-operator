@@ -11,7 +11,7 @@ fortiadc:
 
 image:
   repository: ouestfrance/fortiadc-operator
-  tag: 0.1.4
+  tag: ""
   pullPolicy: Always
 
 nameOverride: ""
