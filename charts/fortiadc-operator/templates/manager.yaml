@@ -24,7 +24,7 @@ spec:
         heritage: {{ .Release.Service }}
         release: {{ .Release.Name }}
     spec:
-      serviceAccountName: {{ .Values.serviceAccount }}
+      serviceAccountName: {{ include "fortiadc-operator.serviceAccountName" . }}
       containers:
       - args:
         - --secure-listen-address=0.0.0.0:8443
@@ -62,7 +62,7 @@ spec:
             secretKeyRef:
               key: insecure
               name: {{ template "fortiadc-operator.fullname" . }}
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         name: manager
         resources:
