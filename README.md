@@ -26,4 +26,4 @@ The Operator acts on the following [custom resource definitions (CRDs)](https://
 
 ## Installation
 
-The recommended way to install the Operator is to use the Helm Chart: [see Chart README](charts/fortiadcoperator/README.md)
+The recommended way to install the Operator is to use the Helm Chart: [see Chart README](charts/fortiadc-operator/README.md)

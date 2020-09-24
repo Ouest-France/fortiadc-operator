@@ -28,8 +28,10 @@ resources:
     cpu: 100m
     memory: 20Mi
 
-serviceAccount: fortiadc-operator
-
+serviceAccount: 
+  create: true
+  # name: "fortiadc-operator"
+  
 serviceMonitor:
   enabled: false
 
